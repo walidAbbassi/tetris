@@ -16,11 +16,15 @@ SOURCES += main.cpp\
         tetris.cpp \
     objects/unit.cpp \
     objects/horse.cpp \
-    gameboard.cpp
+    gameboard.cpp \
+    objects/figure.cpp \
+    objects/square.cpp
 
 HEADERS  += tetris.h \
     objects/unit.h \
     objects/horse.h \
-    gameboard.h
+    gameboard.h \
+    objects/figure.h \
+    objects/square.h
 
 FORMS    += tetris.ui

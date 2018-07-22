@@ -17,19 +17,17 @@ public:
     explicit Tetris(QWidget *parent = 0);
     ~Tetris();
 
+    bool makeWay(QString key, Figure *current);
+
 protected:
     void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::Tetris *ui;
     Gameboard   *gameboard;     // Наш кастомный виджет
+    bool noway = false;
 private slots:
-   /* void on_radioButton_red_clicked();
 
-    void on_radioButton_green_clicked();
-
-    void on_radioButton_blue_clicked();*/
-    void on_pushButton_clicked();
 };
 
 #endif // TETRIS_H

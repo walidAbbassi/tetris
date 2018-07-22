@@ -1,6 +1,8 @@
 #include "tetris.h"
 #include "ui_tetris.h"
 #include <QString>
+#include <objects/figure.h>
+#include <objects/square.h>
 Tetris::Tetris(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Tetris)
@@ -17,69 +19,47 @@ Tetris::~Tetris()
     delete ui;
 }
 
-/*void Tetris::paintEvent(QPaintEvent *event)
+
+bool Tetris::makeWay(QString key, Figure *current)
 {
-    Q_UNUSED(event);
-    QPainter painter(this); // Создаём объект отрисовщика
-    // Устанавливаем кисть абриса
-    painter.setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::FlatCap));
+    if(key == "W") {
+        ui->statusBar->showMessage("Pressed W");
 
 
-    if(ui->radioButton_red->isChecked()){
-        // Если красный, то отрисовываем красный круг
-        painter.setBrush(QBrush(Qt::red, Qt::SolidPattern));
-        painter.drawEllipse(100, 50, 150, 150);
-    } else if(ui->radioButton_green->isChecked()){
-        // Если зелёный, то отрисовываем зеленый круг
-        painter.setBrush(QBrush(Qt::green, Qt::SolidPattern));
-        painter.drawEllipse(100, 50, 150, 150);
-    } else if(ui->radioButton_blue->isChecked()){
-        // Если синий, то отрисовываем синий круг
-        painter.setBrush(QBrush(Qt::blue, Qt::SolidPattern));
-        painter.drawEllipse(100, 50, 150, 150);
-    } else {
-        // Если ничего не выбрано, то отрисовываем белый круг
-        painter.setBrush(QBrush(Qt::white, Qt::SolidPattern));
-        painter.drawEllipse(100, 50, 150, 150);
+    } else if(key == "S") {
+        if (current->getY() + current->getEdgeY() <= 270) {
+            current->shiftCoords(0, 10);
+            return false;
+        }
+        return true;
+    } else if(key == "A") {
+
+        if (current->getX() - current->getEdgeLeftX() >= 0) {
+            current->shiftCoords(-10, 0);
+        }
+    } else if(key == "D") {
+
+        if (current->getX() + current->getEdgeRightX() <= 190) {
+            current->shiftCoords(10, 0);
+        }
     }
-}
-
-
-void Tetris::on_radioButton_red_clicked()
-{
-    repaint();
-}
-
-void Tetris::on_radioButton_green_clicked()
-{
-    repaint();
-}
-
-void Tetris::on_radioButton_blue_clicked()
-{
-    repaint();
-}*/
-
-
-void Tetris::on_pushButton_clicked()
-{
-
+    return false;
 }
 
 void Tetris::keyPressEvent(QKeyEvent *event)
 {
     QString key= (QString)event->key();
     ui->score_count->setText(key);
-    if(key == "W") {
-        ui->statusBar->showMessage("Pressed W");
-        gameboard->current->shiftCoords(0, -10);
-    } else if(key == "S") {
-        gameboard->current->shiftCoords(0, 10);
-    } else if(key == "A") {
-        gameboard->current->shiftCoords(-10, 0);
-    } else if(key == "D") {
-        ui->statusBar->showMessage("Pressed D");
-        gameboard->current->shiftCoords(10, 0);
+    Figure *current = gameboard->current;
+
+    if (noway) {
+        ui->label_debug->setText(current->getCoords());
+        gameboard->setCurrentFigure();
     }
 
+
+    noway = makeWay(key, current);
+
+
 }
+

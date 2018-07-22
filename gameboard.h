@@ -6,16 +6,18 @@
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
 #include <QTimer>
-#include "objects/horse.h"
+#include "objects/figure.h"
 #include "ui_tetris.h"
-
+#include <vector>
 // Расширяем класс QGraphicsView
 class Gameboard : public QGraphicsView
 {
     Q_OBJECT
 public:
     explicit Gameboard(Ui::Tetris *ui, QWidget *parent = 0);
-    Horse               *current;
+    Figure               *current;
+
+    void setCurrentFigure();
     ~Gameboard();
 
 signals:
@@ -30,6 +32,7 @@ private:
     QTimer              *timer;
     int repaintCount = 0;
     Ui::Tetris *ui;
+    std::vector<Figure*> figures;
 
 private:
     void resizeEvent(QResizeEvent *event);
@@ -37,6 +40,8 @@ private:
     void setDefaultSettings();
     void setSceneAndGroups();
     void initTimer();
+    void deleteOnelineUnits();
+
 };
 
 #endif // GAMEBOARD_H

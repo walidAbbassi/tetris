@@ -19,11 +19,15 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>231</width>
+      <width>211</width>
       <height>281</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout"/>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+    </layout>
    </widget>
    <widget class="QLabel" name="lable_score">
     <property name="geometry">
@@ -75,6 +79,19 @@
     </property>
     <property name="text">
      <string>Start</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_debug">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>90</y>
+      <width>67</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
