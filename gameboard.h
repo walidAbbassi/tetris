@@ -1,20 +1,22 @@
-#ifndef MYGRAPHICVIEW_H
-#define MYGRAPHICVIEW_H
+#ifndef GAMEBOARD_H
+#define GAMEBOARD_H
 
 #include <QWidget>
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
 #include <QTimer>
-
+#include "objects/horse.h"
+#include "ui_tetris.h"
 
 // Расширяем класс QGraphicsView
-class MyGraphicView : public QGraphicsView
+class Gameboard : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit MyGraphicView(QWidget *parent = 0);
-    ~MyGraphicView();
+    explicit Gameboard(Ui::Tetris *ui, QWidget *parent = 0);
+    Horse               *current;
+    ~Gameboard();
 
 signals:
 
@@ -25,8 +27,9 @@ private:
     QGraphicsScene      *scene;
     QGraphicsItemGroup  *group_1;
     QGraphicsItemGroup  *group_2;
-
     QTimer              *timer;
+    int repaintCount = 0;
+    Ui::Tetris *ui;
 
 private:
     void resizeEvent(QResizeEvent *event);
@@ -36,4 +39,4 @@ private:
     void initTimer();
 };
 
-#endif // MYGRAPHICVIEW_H
+#endif // GAMEBOARD_H

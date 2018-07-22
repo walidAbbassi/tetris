@@ -4,12 +4,12 @@
 class Unit
 {
 public:
-    Unit(int x, int y);
+    Unit(int offsetX, int offsetY);
     ~Unit();
-    QGraphicsRectItem *draw(QGraphicsScene *scene);
+    QGraphicsRectItem *draw(QGraphicsScene *scene, int x, int y);
 private:
-    int x;
-    int y;
+    int offsetX;
+    int offsetY;
     int width = 10;
     int height = 10;
 };

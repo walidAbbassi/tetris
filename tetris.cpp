@@ -1,15 +1,15 @@
 #include "tetris.h"
 #include "ui_tetris.h"
-
+#include <QString>
 Tetris::Tetris(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Tetris)
 {
     ui->setupUi(this);
     /* Инициализируем виджет с графикой */
-    myPicture   = new MyGraphicView();
+    gameboard   = new Gameboard(ui);
     /* и добавляем его на слой */
-    ui->gridLayout->addWidget(myPicture);
+    ui->gridLayout->addWidget(gameboard);
 }
 
 Tetris::~Tetris()
@@ -63,5 +63,23 @@ void Tetris::on_radioButton_blue_clicked()
 
 void Tetris::on_pushButton_clicked()
 {
+
+}
+
+void Tetris::keyPressEvent(QKeyEvent *event)
+{
+    QString key= (QString)event->key();
+    ui->score_count->setText(key);
+    if(key == "W") {
+        ui->statusBar->showMessage("Pressed W");
+        gameboard->current->shiftCoords(0, -10);
+    } else if(key == "S") {
+        gameboard->current->shiftCoords(0, 10);
+    } else if(key == "A") {
+        gameboard->current->shiftCoords(-10, 0);
+    } else if(key == "D") {
+        ui->statusBar->showMessage("Pressed D");
+        gameboard->current->shiftCoords(10, 0);
+    }
 
 }

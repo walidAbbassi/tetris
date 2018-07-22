@@ -2,9 +2,9 @@
 #define TETRIS_H
 
 #include <QMainWindow>
-#include<QPainter>
-#include <mygraphicview.h>
-
+#include <QPainter>
+#include <gameboard.h>
+#include <QKeyEvent>
 namespace Ui {
 class Tetris;
 }
@@ -18,11 +18,11 @@ public:
     ~Tetris();
 
 protected:
-   // void paintEvent(QPaintEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::Tetris *ui;
-    MyGraphicView   *myPicture;     // Наш кастомный виджет
+    Gameboard   *gameboard;     // Наш кастомный виджет
 private slots:
    /* void on_radioButton_red_clicked();
 

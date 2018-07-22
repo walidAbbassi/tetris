@@ -14,13 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         tetris.cpp \
-    mygraphicview.cpp \
     objects/unit.cpp \
-    objects/horse.cpp
+    objects/horse.cpp \
+    gameboard.cpp
 
 HEADERS  += tetris.h \
-    mygraphicview.h \
     objects/unit.h \
-    objects/horse.h
+    objects/horse.h \
+    gameboard.h
 
 FORMS    += tetris.ui
