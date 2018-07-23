@@ -37,6 +37,7 @@ void Gameboard::initTimer()
 
     connect(timer, SIGNAL(timeout()), this, SLOT(slotAlarmTimer()));
     timer->start(50);
+    startTimer(750);
 }
 
 Gameboard::Gameboard(Ui::Tetris *ui, QWidget *parent)
@@ -57,6 +58,7 @@ Gameboard::~Gameboard()
 
 void Gameboard::slotAlarmTimer()
 {
+
 
     this->deleteItemsFromGroup(current);
     this->deleteItemsFromGroup(group_2);
@@ -167,15 +169,31 @@ void Gameboard::drawUnits()
 
 bool Gameboard::isBarrierBottom()
 {
+    if(!(current->getY() + current->getEdgeY() <= 270)) {
+        return true;
+    }
     std::vector<Unit*> figureUnits = current->getUnits();
     for (int i = 0; i < figureUnits.size(); i++) {
         for(int j = 0; j < units.size(); j++) {
-            if (figureUnits[i]->getY() + figureUnits[i]->getOffsetY() == units[j]->getY() &&
-                figureUnits[i]->getX() == units[j]->getX()
+
+            if ((figureUnits[i]->getY() + figureUnits[i]->getOffsetY() == units[j]->getY() &&
+                figureUnits[i]->getX() == units[j]->getX())
                     ) {
                 return true;
             }
         }
     }
     return false;
+}
+
+void Gameboard::timerEvent(QTimerEvent*)
+{
+    bool isbottom = isBarrierBottom();
+
+    if(isbottom) {
+        setCurrentFigure();
+    } else {
+        current->shiftCoords(0,10);
+    }
+
 }

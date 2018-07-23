@@ -28,7 +28,7 @@ bool Tetris::makeWay(QString key, Figure *current)
 
     } else if(key == "S") {
         current->shiftCoords(0, 10);
-        if (!gameboard->isBarrierBottom() && current->getY() + current->getEdgeY() <= 270) {
+        if (!gameboard->isBarrierBottom()) {
             return false;
         }
         gameboard->setCurrentFigure();

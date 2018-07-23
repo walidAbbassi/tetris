@@ -22,6 +22,9 @@ public:
     bool isBarrierBottom();
     ~Gameboard();
 
+protected:
+    virtual void timerEvent(QTimerEvent*);
+
 signals:
 
 private slots:
