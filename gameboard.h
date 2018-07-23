@@ -47,7 +47,7 @@ private:
     void initTimer();
     void deleteOnelineUnits();
     void drawUnits();
-
+    void createRandomFigure();
     void countOneLineUnits(std::map< QString, int> &coords);
     void deleteUnits(std::map< QString, int> &coords, std::map< QString, int>::iterator &it);
 };

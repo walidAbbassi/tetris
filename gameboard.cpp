@@ -7,6 +7,7 @@
 #include <QString>
 #include "ui_tetris.h"
 #include "objects/unit.h"
+#include <time.h>
 #include <map>
 #include <vector>
 void Gameboard::setDefaultSettings()
@@ -108,7 +109,7 @@ void Gameboard::setCurrentFigure()
         delete current;
     }
 
-    current = new Lightning(50,0);
+    createRandomFigure();
     current->setUnitsCoords();
     bool isGameOver = isBarrierBottom();
 
@@ -196,6 +197,32 @@ void Gameboard::timerEvent(QTimerEvent*)
         setCurrentFigure();
     } else {
         current->shiftCoords(0,10);
+    }
+
+}
+
+void Gameboard::createRandomFigure()
+{
+    int posX = 50;
+    int posY = 0;
+    srand(time(NULL));
+    int randNum = 1 + rand() % 4;
+    switch (randNum) {
+        case 1:
+            current = new Square(posX,posY);
+        break;
+
+        case 2:
+            current = new Horse(posX,posY);
+        break;
+
+        case 3:
+            current = new Straight(posX,posY);
+        break;
+
+        case 4:
+            current = new Lightning(posX,posY);
+        break;
     }
 
 }

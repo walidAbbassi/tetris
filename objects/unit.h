@@ -4,13 +4,14 @@
 class Unit
 {
 public:
-    Unit(int offsetX, int offsetY);
+    Unit(int offsetX, int offsetY, QPen pen = QPen(Qt::red));
     ~Unit();
     void setXY(int x, int y);
     int getOffsetX();
     int getOffsetY();
     int getX();
     int getY();
+    QPen getPen();
     QGraphicsRectItem *draw(QGraphicsScene *scene, int x = 0, int y = 0);
 private:
     int offsetX;
@@ -19,6 +20,7 @@ private:
     int y = NULL;
     int width = 10;
     int height = 10;
+    QPen pen;
 };
 
 #endif // UNIT_H
