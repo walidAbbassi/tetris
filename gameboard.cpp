@@ -71,7 +71,6 @@ void Gameboard::slotAlarmTimer()
     repaintCount++;
     ui->statusBar->showMessage(QString::number(repaintCount));
 
-    ui->lable_score->setText(current->getCoords());
     current->drawUnits(scene);
     this->drawUnits();
     this->deleteOnelineUnits();
@@ -101,11 +100,17 @@ void Gameboard::setCurrentFigure()
     if(current != NULL) {
         std::vector<Unit*> figureUnits = current->getUnits();
         units.insert(units.end(), figureUnits.begin(), figureUnits.end());
-       // ui->label_debug->setText(QString::number(units.size()));
+
         delete current;
     }
 
-    current = new Square(10,10);
+    current = new Square(50,0);
+    current->setUnitsCoords();
+    bool isGameOver = isBarrierBottom();
+
+    if(isGameOver) {
+        ui->lable_score->setText("Game over");
+    }
     scene->addItem(current);
 
 }
@@ -158,4 +163,19 @@ void Gameboard::drawUnits()
         group_2->addToGroup(units[i]->draw(this->scene));
     }
 
+}
+
+bool Gameboard::isBarrierBottom()
+{
+    std::vector<Unit*> figureUnits = current->getUnits();
+    for (int i = 0; i < figureUnits.size(); i++) {
+        for(int j = 0; j < units.size(); j++) {
+            if (figureUnits[i]->getY() + figureUnits[i]->getOffsetY() == units[j]->getY() &&
+                figureUnits[i]->getX() == units[j]->getX()
+                    ) {
+                return true;
+            }
+        }
+    }
+    return false;
 }

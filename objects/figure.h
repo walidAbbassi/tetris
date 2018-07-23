@@ -22,6 +22,8 @@ public:
     void drawUnits(QGraphicsScene *scene);
     void shiftCoords(int x = 0, int y = 0);
     int getEdge();
+
+    void setUnitsCoords();
 protected:
     int x;
     int y;
@@ -29,6 +31,7 @@ protected:
     int edgeDownY;
     int edgeLeftX;
     int edgeRightX;
+private:
 };
 
 #endif // FIGURE_H

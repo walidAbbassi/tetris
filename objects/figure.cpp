@@ -13,15 +13,20 @@ Figure::Figure(int x, int y, int ey, int erx, int elx):
 
 }
 
+void Figure::setUnitsCoords()
+{
+    for(int i = 0; i < units.size(); i++)
+    {
+        units[i]->setXY(
+                    this->x + units[i]->getOffsetX(),
+                    this->y + units[i]->getOffsetY()
+                    );
+    }
+}
+
 Figure::~Figure()
 {
-   for(int i = 0; i < units.size(); i++)
-   {
-       units[i]->setXY(
-                   this->x + units[i]->getOffsetX(),
-                   this->y + units[i]->getOffsetY()
-                   );
-   }
+   setUnitsCoords();
 }
 
 void Figure::drawUnits(QGraphicsScene *scene)
@@ -65,6 +70,8 @@ void Figure::shiftCoords(int x, int y)
 {
     this->x +=x;
     this->y +=y;
+
+    this->setUnitsCoords();
 
 }
 

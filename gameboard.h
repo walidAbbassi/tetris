@@ -19,6 +19,7 @@ public:
     Figure               *current = NULL;
 
     void setCurrentFigure();
+    bool isBarrierBottom();
     ~Gameboard();
 
 signals:
