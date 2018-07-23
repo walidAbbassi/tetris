@@ -27,11 +27,11 @@ bool Tetris::makeWay(QString key, Figure *current)
 
 
     } else if(key == "S") {
+        current->shiftCoords(0, 10);
         if (current->getY() + current->getEdgeY() <= 270) {
-            current->shiftCoords(0, 10);
             return false;
         }
-        return true;
+        gameboard->setCurrentFigure();
     } else if(key == "A") {
 
         if (current->getX() - current->getEdgeLeftX() >= 0) {
@@ -50,15 +50,14 @@ void Tetris::keyPressEvent(QKeyEvent *event)
 {
     QString key= (QString)event->key();
     ui->score_count->setText(key);
-    Figure *current = gameboard->current;
 
     if (noway) {
-        ui->label_debug->setText(current->getCoords());
-        gameboard->setCurrentFigure();
+        ui->label_debug->setText(gameboard->current->getCoords());
+
     }
 
 
-    noway = makeWay(key, current);
+    noway = makeWay(key, gameboard->current);
 
 
 }

@@ -7,6 +7,7 @@ class Figure: public QGraphicsItemGroup
 {
 public:
     Figure(int x, int y, int edgeDownY, int edgeRightX, int edgeLeftX = 10);
+    ~Figure();
     void setX(int x);
     void setY(int y);
     int getX();
@@ -15,6 +16,7 @@ public:
     int getEdgeY();
     int getEdgeRightX();
     int getEdgeLeftX();
+    std::vector<Unit*> getUnits();
 
     QString getCoords();
     void drawUnits(QGraphicsScene *scene);

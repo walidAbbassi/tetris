@@ -1,6 +1,7 @@
 #include "figure.h"
 #include <QString>
 #include <QDebug>
+#include <vector>
 
 Figure::Figure(int x, int y, int ey, int erx, int elx):
     x(x),
@@ -10,6 +11,17 @@ Figure::Figure(int x, int y, int ey, int erx, int elx):
     edgeRightX(erx)
 {
 
+}
+
+Figure::~Figure()
+{
+   for(int i = 0; i < units.size(); i++)
+   {
+       units[i]->setXY(
+                   this->x + units[i]->getOffsetX(),
+                   this->y + units[i]->getOffsetY()
+                   );
+   }
 }
 
 void Figure::drawUnits(QGraphicsScene *scene)
@@ -60,6 +72,7 @@ int Figure::getEdgeY()
 {
     return this->edgeDownY;
 }
+
 int Figure::getEdgeRightX()
 {
     return this->edgeRightX;
@@ -68,4 +81,9 @@ int Figure::getEdgeRightX()
 int Figure::getEdgeLeftX()
 {
     return this->edgeLeftX;
+}
+
+std::vector<Unit*> Figure::getUnits()
+{
+    return this->units;
 }

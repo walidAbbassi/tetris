@@ -6,6 +6,7 @@
 #include "ui_tetris.h"
 #include "objects/unit.h"
 #include <map>
+#include <vector>
 void Gameboard::setDefaultSettings()
 {
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -59,7 +60,7 @@ void Gameboard::slotAlarmTimer()
 
     this->deleteItemsFromGroup(current);
     this->deleteItemsFromGroup(group_2);
-   // current->deleteHorseDraws();
+
 
     int width = this->width();
     int height = this->height();
@@ -72,6 +73,8 @@ void Gameboard::slotAlarmTimer()
 
     ui->lable_score->setText(current->getCoords());
     current->drawUnits(scene);
+    this->drawUnits();
+    this->deleteOnelineUnits();
 }
 
 
@@ -95,18 +98,64 @@ void Gameboard::deleteItemsFromGroup(QGraphicsItemGroup *group)
 
 void Gameboard::setCurrentFigure()
 {
+    if(current != NULL) {
+        std::vector<Unit*> figureUnits = current->getUnits();
+        units.insert(units.end(), figureUnits.begin(), figureUnits.end());
+       // ui->label_debug->setText(QString::number(units.size()));
+        delete current;
+    }
+
     current = new Square(10,10);
     scene->addItem(current);
-    figures.push_back(current);
+
+}
+
+void Gameboard::countOneLineUnits(std::map< QString, int> &coords)
+{
+    for (int i = 0; i < units.size(); i++) {
+        QString position = QString::number(units[i]->getY());/**/
+        if (coords.find(position) != coords.end()) {
+            coords[position]++;
+        } else {
+            coords[position] = 1;
+        }
+    }
+}
+
+void Gameboard::deleteUnits(std::map< QString, int> &coords, std::map< QString, int>::iterator &it)
+{
+    for ( it = coords.begin(); it != coords.end(); it++) {
+        int currentPos = (it->first).toInt();
+        if (it->second ==20) {
+            std::vector< Unit*>::iterator c = units.begin();
+            while (c != units.end()) {
+
+                if((*c)->getY() == currentPos) {
+                    c = units.erase(c);
+                } else {
+                    c++;
+                }
+            }
+        }
+    }
 }
 
 void Gameboard::deleteOnelineUnits()
 {
-  /*  std::map< QString, std::vector<Unit*> > coords;
+    std::map< QString, int> coords;
 
-    for (int i = 0; i < figures.size(); i++) {
-        for(int j = 0; j < figures[i]->units; j++) {
+    countOneLineUnits(coords);
 
-        }
-    }*/
+    std::map< QString, int>::iterator it;
+
+    deleteUnits(coords, it);
+
+}
+
+void Gameboard::drawUnits()
+{
+    for (int i = 0; i < units.size(); i++) {
+        group_2->addToGroup(units[i]->draw(this->scene));
+    }
+
 }
