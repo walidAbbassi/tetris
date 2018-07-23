@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <gameboard.h>
 #include <QKeyEvent>
+
 namespace Ui {
 class Tetris;
 }
@@ -24,10 +25,8 @@ protected:
 
 private:
     Ui::Tetris *ui;
-    Gameboard   *gameboard;     // Наш кастомный виджет
-    bool noway = false;
+    Gameboard   *gameboard;
 private slots:
 
 };
-
 #endif // TETRIS_H

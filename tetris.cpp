@@ -8,9 +8,7 @@ Tetris::Tetris(QWidget *parent) :
     ui(new Ui::Tetris)
 {
     ui->setupUi(this);
-    /* Инициализируем виджет с графикой */
     gameboard   = new Gameboard(ui);
-    /* и добавляем его на слой */
     ui->gridLayout->addWidget(gameboard);
 }
 
@@ -48,17 +46,8 @@ bool Tetris::makeWay(QString key, Figure *current)
 
 void Tetris::keyPressEvent(QKeyEvent *event)
 {
-    QString key= (QString)event->key();
+    QString key = (QString)event->key();
     ui->score_count->setText(key);
-
-    if (noway) {
-        ui->label_debug->setText(gameboard->current->getCoords());
-
-    }
-
-
-    noway = makeWay(key, gameboard->current);
-
-
+    makeWay(key, gameboard->current);
 }
 
