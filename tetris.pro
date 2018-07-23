@@ -18,13 +18,17 @@ SOURCES += main.cpp\
     objects/horse.cpp \
     gameboard.cpp \
     objects/figure.cpp \
-    objects/square.cpp
+    objects/square.cpp \
+    objects/straight.cpp \
+    objects/lightning.cpp
 
 HEADERS  += tetris.h \
     objects/unit.h \
     objects/horse.h \
     gameboard.h \
     objects/figure.h \
-    objects/square.h
+    objects/square.h \
+    objects/straight.h \
+    objects/lightning.h
 
 FORMS    += tetris.ui

@@ -2,6 +2,8 @@
 #include "gameboard.h"
 #include "objects/horse.h"
 #include "objects/square.h"
+#include "objects/straight.h"
+#include "objects/lightning.h"
 #include <QString>
 #include "ui_tetris.h"
 #include "objects/unit.h"
@@ -106,7 +108,7 @@ void Gameboard::setCurrentFigure()
         delete current;
     }
 
-    current = new Square(50,0);
+    current = new Lightning(50,0);
     current->setUnitsCoords();
     bool isGameOver = isBarrierBottom();
 
