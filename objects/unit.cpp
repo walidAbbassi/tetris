@@ -8,7 +8,7 @@ Unit::~Unit(){};
 QGraphicsRectItem *Unit::draw(QGraphicsScene *scene, int x, int y)
 {
     QPen penRed(Qt::red);
-    if(this->x != NULL && this->y != NULL) {
+    if(this->x != NULL || this->y != NULL) {
         return scene->addRect(this->x,this->y,10,10, penRed);
     } else {
         return scene->addRect(x+offsetX,y+offsetY,10,10, penRed);
