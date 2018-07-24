@@ -13,6 +13,8 @@ Figure::Figure(int x, int y, int ey, int erx, int elx):
 
 }
 
+Figure::Figure(){}
+
 void Figure::setUnitsCoords()
 {
     for(int i = 0; i < units.size(); i++)
@@ -38,6 +40,8 @@ void Figure::drawUnits(QGraphicsScene *scene)
     }
 
 }
+
+void Figure::rotate(){}
 
 void Figure::setX(int x)
 {

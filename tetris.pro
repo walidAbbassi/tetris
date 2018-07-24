@@ -32,3 +32,6 @@ HEADERS  += tetris.h \
     objects/lightning.h
 
 FORMS    += tetris.ui
+
+RESOURCES += \
+    images.qrc

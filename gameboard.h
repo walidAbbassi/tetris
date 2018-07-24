@@ -23,6 +23,8 @@ public:
     bool isBarrierLeft();
     bool isBarrierRight();
     void resetGameState();
+
+    bool drawCompleted = false;
     ~Gameboard();
 
 protected:
@@ -41,9 +43,9 @@ private:
     int repaintCount = 0;
     int Score = 0;
     Ui::Tetris *ui;
+    Figure *next = NULL;
     std::vector<Unit*> units;
     bool isGameOver;
-    bool drawCompleted = false;
 private:
     void resizeEvent(QResizeEvent *event);
     void deleteItemsFromGroup(QGraphicsItemGroup *group_1);
@@ -52,7 +54,7 @@ private:
     void initTimer();
     void deleteOnelineUnits();
     void drawUnits();
-    void createRandomFigure();
+    Figure *createRandomFigure();
     void countOneLineUnits(std::map< QString, int> &coords);
     std::vector<int> deleteUnits(std::map< QString, int> &coords, std::map< QString, int>::iterator &it);
     void moveAllUnitsDown(std::vector<int> deletedCoords);

@@ -1,4 +1,3 @@
-
 #include "gameboard.h"
 #include "objects/horse.h"
 #include "objects/square.h"
@@ -10,6 +9,7 @@
 #include <time.h>
 #include <map>
 #include <vector>
+
 void Gameboard::setDefaultSettings()
 {
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -70,9 +70,6 @@ void Gameboard::slotAlarmTimer()
         int height = this->height();
         scene->setSceneRect(0,0,width,height);
 
-        repaintCount++;
-        ui->statusBar->showMessage(QString::number(repaintCount));
-
         current->drawUnits(scene);
         this->drawUnits();
         drawCompleted = true;
@@ -107,8 +104,12 @@ void Gameboard::setCurrentFigure()
 
         delete current;
     }
-
-    createRandomFigure();
+    current = next;
+    next = createRandomFigure();
+    if(current == NULL){
+        current = next;
+        next = createRandomFigure();
+    }
     current->setUnitsCoords();
     isGameOver = isBarrierBottom();
 
@@ -169,8 +170,6 @@ void Gameboard::deleteOnelineUnits()
 
     deletedCoords = deleteUnits(coords, it);
     moveAllUnitsDown(deletedCoords);
-
-
 }
 
 void Gameboard::moveAllUnitsDown(std::vector<int> deletedCoords)
@@ -261,31 +260,38 @@ void Gameboard::timerEvent(QTimerEvent*)
     }
 }
 
-void Gameboard::createRandomFigure()
+Figure *Gameboard:: createRandomFigure()
 {
     int posX = 50;
     int posY = 0;
     srand(time(NULL));
     int randNum = 1 + rand() % 4;
-    //randNum = 2;
+    Figure *f;
+    QPixmap pic1;
     switch (randNum) {
         case 1:
-            current = new Square(posX,posY);
+            pic1 = QPixmap(":/figures/images/images/square.png");
+            f = new Square(posX,posY);
         break;
 
         case 2:
-            current = new Horse(posX,posY);
+            pic1 = QPixmap(":/figures/images/images/horse.png");
+            f = new Horse(posX,posY);
         break;
 
         case 3:
-            current = new Straight(posX,posY);
+            pic1 = QPixmap(":/figures/images/images/straight.png");
+            f = new Straight(posX,posY);
         break;
 
         case 4:
-            current = new Lightning(posX,posY);
+            pic1 = QPixmap(":/figures/images/images/lightning.png");
+            f = new Lightning(posX,posY);
         break;
     }
 
+    ui->next_figure->setPixmap(pic1);
+    return f;
 }
 
 void Gameboard::resetGameState()

@@ -7,6 +7,7 @@ class Figure: public QGraphicsItemGroup
 {
 public:
     Figure(int x, int y, int edgeDownY, int edgeRightX, int edgeLeftX = 10);
+    Figure();
     ~Figure();
     void setX(int x);
     void setY(int y);
@@ -22,7 +23,7 @@ public:
     void drawUnits(QGraphicsScene *scene);
     void shiftCoords(int x = 0, int y = 0);
     int getEdge();
-
+    virtual void rotate();
     void setUnitsCoords();
 protected:
     int x;
@@ -31,6 +32,7 @@ protected:
     int edgeDownY;
     int edgeLeftX;
     int edgeRightX;
+    int rotatePosition = 0;
 private:
 };
 

@@ -46,6 +46,12 @@ int Unit::getOffsetY()
     return this->offsetY;
 }
 
+void Unit::setOffsetXY(int x, int y)
+{
+    this->offsetX = x;
+    this->offsetY = y;
+}
+
 int Unit::getX()
 {
     return this->x;

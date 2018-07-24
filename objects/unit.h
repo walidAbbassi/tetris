@@ -9,6 +9,9 @@ public:
     void setXY(int x, int y);
     int getOffsetX();
     int getOffsetY();
+    void setOffsetXY(int, int);
+
+
     int getX();
     int getY();
     void setX(int);
