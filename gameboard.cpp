@@ -61,21 +61,23 @@ Gameboard::~Gameboard()
 
 void Gameboard::slotAlarmTimer()
 {
-    drawCompleted = false;
-    this->deleteItemsFromGroup(current);
-    this->deleteItemsFromGroup(group_2);
+    if (!isGameOver) {
+        drawCompleted = false;
+        this->deleteItemsFromGroup(current);
+        this->deleteItemsFromGroup(group_2);
 
-    int width = this->width();
-    int height = this->height();
-    scene->setSceneRect(0,0,width,height);
+        int width = this->width();
+        int height = this->height();
+        scene->setSceneRect(0,0,width,height);
 
-    repaintCount++;
-    ui->statusBar->showMessage(QString::number(repaintCount));
+        repaintCount++;
+        ui->statusBar->showMessage(QString::number(repaintCount));
 
-    current->drawUnits(scene);
-    this->drawUnits();
-    drawCompleted = true;
-    this->deleteOnelineUnits();
+        current->drawUnits(scene);
+        this->drawUnits();
+        drawCompleted = true;
+        this->deleteOnelineUnits();
+    }
 }
 
 
@@ -108,7 +110,7 @@ void Gameboard::setCurrentFigure()
 
     createRandomFigure();
     current->setUnitsCoords();
-    bool isGameOver = isBarrierBottom();
+    isGameOver = isBarrierBottom();
 
     if(isGameOver) {
         ui->lable_score->setText("Game over");
@@ -283,5 +285,14 @@ void Gameboard::createRandomFigure()
             current = new Lightning(posX,posY);
         break;
     }
+
+}
+
+void Gameboard::resetGameState()
+{
+    setCurrentFigure();
+    units.clear();
+    Score = 0;
+    ui->lable_score->setText("Score");
 
 }

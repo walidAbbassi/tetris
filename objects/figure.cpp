@@ -32,7 +32,9 @@ Figure::~Figure()
 void Figure::drawUnits(QGraphicsScene *scene)
 {
     for (int i = 0; i < units.size(); i++) {
-        this->addToGroup(units[i]->draw(scene, x, y));
+        QGraphicsRectItem* item = units[i]->draw(scene, x, y);
+        //item->setBrush(units[i].getBrush());
+        this->addToGroup(item);
     }
 
 }

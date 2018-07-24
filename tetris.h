@@ -28,5 +28,6 @@ private:
     Gameboard   *gameboard;
 private slots:
 
+    void on_pushButton_start_clicked();
 };
 #endif // TETRIS_H

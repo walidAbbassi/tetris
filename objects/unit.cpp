@@ -3,14 +3,18 @@
 #include <QGraphicsRectItem>
 #include <QPen>
 
-Unit::Unit(int offsetX, int offsetY, QPen pen): offsetX(offsetX), offsetY(offsetY), pen(pen){}
-Unit::~Unit(){};
+Unit::Unit(int offsetX, int offsetY, QBrush brush): offsetX(offsetX), offsetY(offsetY), brush(brush){}
+Unit::~Unit(){}
 QGraphicsRectItem *Unit::draw(QGraphicsScene *scene, int x, int y)
 {
     if(this->x != NULL || this->y != NULL) {
-        return scene->addRect(this->x,this->y,10,10, pen);
+        QGraphicsRectItem *item = scene->addRect(this->x,this->y,10,10);
+        item->setBrush(brush);
+        return item;
     } else {
-        return scene->addRect(x+offsetX,y+offsetY,10,10, pen);
+        QGraphicsRectItem *item = scene->addRect(x+offsetX,y+offsetY,10,10);
+        item->setBrush(brush);
+        return item;
     }
 
 }

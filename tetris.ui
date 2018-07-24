@@ -32,10 +32,10 @@
    <widget class="QLabel" name="lable_score">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>226</x>
       <y>0</y>
-      <width>67</width>
-      <height>17</height>
+      <width>111</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
@@ -45,7 +45,7 @@
    <widget class="QLabel" name="score_count">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>230</x>
       <y>30</y>
       <width>67</width>
       <height>17</height>
@@ -78,7 +78,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Start</string>
+     <string>New game</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_debug">

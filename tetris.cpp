@@ -52,3 +52,8 @@ void Tetris::keyPressEvent(QKeyEvent *event)
     makeWay(key, gameboard->current);
 }
 
+
+void Tetris::on_pushButton_start_clicked()
+{
+    gameboard->resetGameState();
+}

@@ -22,6 +22,7 @@ public:
     bool isBarrierBottom();
     bool isBarrierLeft();
     bool isBarrierRight();
+    void resetGameState();
     ~Gameboard();
 
 protected:
@@ -41,6 +42,7 @@ private:
     int Score = 0;
     Ui::Tetris *ui;
     std::vector<Unit*> units;
+    bool isGameOver;
     bool drawCompleted = false;
 private:
     void resizeEvent(QResizeEvent *event);
