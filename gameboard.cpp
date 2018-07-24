@@ -129,8 +129,9 @@ void Gameboard::countOneLineUnits(std::map< QString, int> &coords)
     }
 }
 
-void Gameboard::deleteUnits(std::map< QString, int> &coords, std::map< QString, int>::iterator &it)
+std::vector<int> Gameboard::deleteUnits(std::map< QString, int> &coords, std::map< QString, int>::iterator &it)
 {
+    std::vector<int> deletedCoords;
     for ( it = coords.begin(); it != coords.end(); it++) {
         int currentPos = (it->first).toInt();
         if (it->second ==20) {
@@ -138,6 +139,10 @@ void Gameboard::deleteUnits(std::map< QString, int> &coords, std::map< QString, 
             while (c != units.end()) {
 
                 if((*c)->getY() == currentPos) {
+                    if (std::find(deletedCoords.begin(), deletedCoords.end(), currentPos) == deletedCoords.end()) {
+                        deletedCoords.push_back(currentPos);
+                    }
+
                     c = units.erase(c);
                 } else {
                     c++;
@@ -145,6 +150,8 @@ void Gameboard::deleteUnits(std::map< QString, int> &coords, std::map< QString, 
             }
         }
     }
+
+    return deletedCoords;
 }
 
 void Gameboard::deleteOnelineUnits()
@@ -154,9 +161,22 @@ void Gameboard::deleteOnelineUnits()
     countOneLineUnits(coords);
 
     std::map< QString, int>::iterator it;
+    std::vector<int> deletedCoords;
 
-    deleteUnits(coords, it);
+    deletedCoords = deleteUnits(coords, it);
+    moveAllUnitsDown(deletedCoords);
 
+}
+
+void Gameboard::moveAllUnitsDown(std::vector<int> deletedCoords)
+{
+    for(int i = 0; i < units.size(); i++) {
+        for (int j = 0; j < deletedCoords.size(); j ++) {
+            if(units[i]->getY() < deletedCoords[j]) {
+                units[i]->setY(units[i]->getY() + 10);
+            }
+        }
+    }
 }
 
 void Gameboard::drawUnits()

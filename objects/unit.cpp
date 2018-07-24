@@ -21,6 +21,17 @@ void Unit::setXY(int x, int y)
     this->y = y;
 }
 
+void Unit::setX(int x)
+{
+    this->x = x;
+}
+
+void Unit::setY(int y)
+{
+    this->y = y;
+}
+
+
 int Unit::getOffsetX()
 {
     return this->offsetX;

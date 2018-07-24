@@ -51,7 +51,8 @@ private:
     void drawUnits();
     void createRandomFigure();
     void countOneLineUnits(std::map< QString, int> &coords);
-    void deleteUnits(std::map< QString, int> &coords, std::map< QString, int>::iterator &it);
+    std::vector<int> deleteUnits(std::map< QString, int> &coords, std::map< QString, int>::iterator &it);
+    void moveAllUnitsDown(std::vector<int> deletedCoords);
 };
 
 #endif // GAMEBOARD_H

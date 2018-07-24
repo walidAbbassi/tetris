@@ -11,6 +11,9 @@ public:
     int getOffsetY();
     int getX();
     int getY();
+    void setX(int);
+    void setY(int);
+
     QPen getPen();
     QGraphicsRectItem *draw(QGraphicsScene *scene, int x = 0, int y = 0);
 private:
