@@ -205,6 +205,25 @@ bool Gameboard::isBarrierLeft()
     return false;
 }
 
+bool Gameboard::isBarrierRight()
+{
+    std::vector<Unit*> figureUnits = current->getUnits();
+    for (int i = 0; i < figureUnits.size(); i++) {
+        if (figureUnits[i]->getX() + 10 > 190) {
+            return true;
+        }
+        for(int j = 0; j < units.size(); j++) {
+
+            if ((figureUnits[i]->getX() + 10 == units[j]->getX() &&
+                figureUnits[i]->getY() == units[j]->getY())
+                    ) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 void Gameboard::timerEvent(QTimerEvent*)
 {
     if (drawCompleted) {

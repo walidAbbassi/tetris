@@ -21,6 +21,7 @@ public:
     void setCurrentFigure();
     bool isBarrierBottom();
     bool isBarrierLeft();
+    bool isBarrierRight();
     ~Gameboard();
 
 protected:

@@ -39,7 +39,7 @@ bool Tetris::makeWay(QString key, Figure *current)
         }
     } else if(key == "D") {
 
-        if (current->getX() + current->getEdgeRightX() <= 190) {
+        if (!gameboard->isBarrierRight()) {
             current->shiftCoords(10, 0);
         }
     }
