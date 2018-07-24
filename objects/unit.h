@@ -31,5 +31,4 @@ private:
     QPen pen = QPen(Qt::black);
 
 };
-
 #endif // UNIT_H

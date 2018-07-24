@@ -16,7 +16,6 @@ QGraphicsRectItem *Unit::draw(QGraphicsScene *scene, int x, int y)
         item->setBrush(brush);
         return item;
     }
-
 }
 
 void Unit::setXY(int x, int y)

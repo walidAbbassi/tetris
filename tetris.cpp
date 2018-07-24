@@ -3,6 +3,7 @@
 #include <QString>
 #include <objects/figure.h>
 #include <objects/square.h>
+
 Tetris::Tetris(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Tetris)

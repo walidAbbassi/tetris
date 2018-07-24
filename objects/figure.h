@@ -35,5 +35,4 @@ protected:
     int rotatePosition = 0;
 private:
 };
-
 #endif // FIGURE_H
