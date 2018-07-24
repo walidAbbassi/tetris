@@ -20,6 +20,7 @@ public:
 
     void setCurrentFigure();
     bool isBarrierBottom();
+    bool isBarrierLeft();
     ~Gameboard();
 
 protected:
@@ -38,7 +39,7 @@ private:
     int repaintCount = 0;
     Ui::Tetris *ui;
     std::vector<Unit*> units;
-
+    bool drawCompleted = false;
 private:
     void resizeEvent(QResizeEvent *event);
     void deleteItemsFromGroup(QGraphicsItemGroup *group_1);

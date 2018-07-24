@@ -25,14 +25,16 @@ bool Tetris::makeWay(QString key, Figure *current)
 
 
     } else if(key == "S") {
-        current->shiftCoords(0, 10);
         if (!gameboard->isBarrierBottom()) {
+
+            current->shiftCoords(0, 10);
             return false;
         }
+
         gameboard->setCurrentFigure();
     } else if(key == "A") {
 
-        if (current->getX() - current->getEdgeLeftX() >= 0) {
+        if (!gameboard->isBarrierLeft()) {
             current->shiftCoords(-10, 0);
         }
     } else if(key == "D") {

@@ -6,7 +6,7 @@
 class Horse: public Figure
 {
 public:
-    Horse(int x, int y, int ey = 30 , int erx = 20);
+    Horse(int x, int y, int ey = 10 , int erx = 20);
 };
 
 #endif // HORSE_H

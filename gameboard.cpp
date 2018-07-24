@@ -61,16 +61,12 @@ Gameboard::~Gameboard()
 
 void Gameboard::slotAlarmTimer()
 {
-
-
+    drawCompleted = false;
     this->deleteItemsFromGroup(current);
     this->deleteItemsFromGroup(group_2);
 
-
     int width = this->width();
     int height = this->height();
-
-
     scene->setSceneRect(0,0,width,height);
 
     repaintCount++;
@@ -78,6 +74,7 @@ void Gameboard::slotAlarmTimer()
 
     current->drawUnits(scene);
     this->drawUnits();
+    drawCompleted = true;
     this->deleteOnelineUnits();
 }
 
@@ -172,15 +169,34 @@ void Gameboard::drawUnits()
 
 bool Gameboard::isBarrierBottom()
 {
-    if(!(current->getY() + current->getEdgeY() <= 270)) {
-        return true;
-    }
     std::vector<Unit*> figureUnits = current->getUnits();
     for (int i = 0; i < figureUnits.size(); i++) {
+        if (figureUnits[i]->getY() + 10 > 270) {
+            return true;
+        }
         for(int j = 0; j < units.size(); j++) {
 
-            if ((figureUnits[i]->getY() + figureUnits[i]->getOffsetY() == units[j]->getY() &&
+            if ((figureUnits[i]->getY() + 10 == units[j]->getY() &&
                 figureUnits[i]->getX() == units[j]->getX())
+                    ) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Gameboard::isBarrierLeft()
+{
+    std::vector<Unit*> figureUnits = current->getUnits();
+    for (int i = 0; i < figureUnits.size(); i++) {
+        if (figureUnits[i]->getX() - 10 < 0) {
+            return true;
+        }
+        for(int j = 0; j < units.size(); j++) {
+
+            if ((figureUnits[i]->getX() - 10 == units[j]->getX() &&
+                figureUnits[i]->getY() == units[j]->getY())
                     ) {
                 return true;
             }
@@ -191,14 +207,14 @@ bool Gameboard::isBarrierBottom()
 
 void Gameboard::timerEvent(QTimerEvent*)
 {
-    bool isbottom = isBarrierBottom();
-
-    if(isbottom) {
-        setCurrentFigure();
-    } else {
-        current->shiftCoords(0,10);
+    if (drawCompleted) {
+        bool isbottom = isBarrierBottom();
+        if(isbottom) {
+            setCurrentFigure();
+        } else {
+            current->shiftCoords(0,10);
+        }
     }
-
 }
 
 void Gameboard::createRandomFigure()
@@ -207,6 +223,7 @@ void Gameboard::createRandomFigure()
     int posY = 0;
     srand(time(NULL));
     int randNum = 1 + rand() % 4;
+    //randNum = 2;
     switch (randNum) {
         case 1:
             current = new Square(posX,posY);
