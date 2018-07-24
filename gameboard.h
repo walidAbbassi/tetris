@@ -38,6 +38,7 @@ private:
     QGraphicsItemGroup  *group_2;
     QTimer              *timer;
     int repaintCount = 0;
+    int Score = 0;
     Ui::Tetris *ui;
     std::vector<Unit*> units;
     bool drawCompleted = false;

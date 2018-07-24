@@ -148,6 +148,8 @@ std::vector<int> Gameboard::deleteUnits(std::map< QString, int> &coords, std::ma
                     c++;
                 }
             }
+            Score +=20;
+            ui->score_count->setText(QString::number(Score));
         }
     }
 
@@ -165,6 +167,7 @@ void Gameboard::deleteOnelineUnits()
 
     deletedCoords = deleteUnits(coords, it);
     moveAllUnitsDown(deletedCoords);
+
 
 }
 

@@ -49,7 +49,6 @@ bool Tetris::makeWay(QString key, Figure *current)
 void Tetris::keyPressEvent(QKeyEvent *event)
 {
     QString key = (QString)event->key();
-    ui->score_count->setText(key);
     makeWay(key, gameboard->current);
 }
 
