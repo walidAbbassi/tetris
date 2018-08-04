@@ -25,6 +25,7 @@ bool Tetris::makeWay(QString key, Figure *current)
 
         ui->statusBar->showMessage("Pressed W");
 
+        current->shiftCoords(0,-10);
 
     } else if(key == "S") {
         if (!gameboard->isBarrierBottom()) {
@@ -44,10 +45,10 @@ bool Tetris::makeWay(QString key, Figure *current)
         if (!gameboard->isBarrierRight()) {
             current->shiftCoords(10, 0);
         }
-    }/* else if(key == "R") {
+    } else if(key == "R") {
         gameboard->drawCompleted = false;
         gameboard->current->rotate();
-    }*/
+    }
     return false;
 }
 
