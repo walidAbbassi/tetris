@@ -16,10 +16,8 @@ void Gameboard::setDefaultSettings()
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    this->setMinimumHeight(100);
-    this->setMinimumWidth(100);
-    this->setMaximumWidth(200);
-    this->setMaximumHeight(300);
+    this->setMaximumWidth(Gameboard::BOARD_WIDTH);
+    this->setMaximumHeight(Gameboard::BOARD_HEIGHT);
 }
 
 void Gameboard::setSceneAndGroups()
@@ -129,7 +127,7 @@ std::vector<int> Gameboard::deleteUnits(std::map< QString, int> &coords, std::ma
     std::vector<int> deletedCoords;
     for ( it = coords.begin(); it != coords.end(); it++) {
         int currentPos = (it->first).toInt();
-        if (it->second ==20) {
+        if (it->second == Gameboard::MAX_UNITS_PER_LINE) {
             std::vector< Unit*>::iterator c = units.begin();
             while (c != units.end()) {
 
@@ -143,7 +141,7 @@ std::vector<int> Gameboard::deleteUnits(std::map< QString, int> &coords, std::ma
                     c++;
                 }
             }
-            Score +=20;
+            Score += Gameboard::MAX_UNITS_PER_LINE;
             ui->score_count->setText(QString::number(Score));
         }
     }
@@ -169,7 +167,7 @@ void Gameboard::moveAllUnitsDown(std::vector<int> deletedCoords)
     for(int i = 0; i < units.size(); i++) {
         for (int j = 0; j < deletedCoords.size(); j ++) {
             if(units[i]->getY() < deletedCoords[j]) {
-                units[i]->setY(units[i]->getY() + 10);
+                units[i]->setY(units[i]->getY() + Unit::HEIGHT);
             }
         }
     }
@@ -187,12 +185,12 @@ bool Gameboard::isBarrierBottom()
 {
     std::vector<Unit*> figureUnits = current->getUnits();
     for (int i = 0; i < figureUnits.size(); i++) {
-        if (figureUnits[i]->getY() + 10 > 270) {
+        if (figureUnits[i]->getY() + Unit::HEIGHT > 270) {
             return true;
         }
         for(int j = 0; j < units.size(); j++) {
 
-            if ((figureUnits[i]->getY() + 10 == units[j]->getY() &&
+            if ((figureUnits[i]->getY() + Unit::HEIGHT == units[j]->getY() &&
                 figureUnits[i]->getX() == units[j]->getX())
                     ) {
                 return true;
@@ -206,12 +204,12 @@ bool Gameboard::isBarrierLeft()
 {
     std::vector<Unit*> figureUnits = current->getUnits();
     for (int i = 0; i < figureUnits.size(); i++) {
-        if (figureUnits[i]->getX() - 10 < 0) {
+        if (figureUnits[i]->getX() - Unit::WIDTH < 0) {
             return true;
         }
         for(int j = 0; j < units.size(); j++) {
 
-            if ((figureUnits[i]->getX() - 10 == units[j]->getX() &&
+            if ((figureUnits[i]->getX() - Unit::WIDTH == units[j]->getX() &&
                 figureUnits[i]->getY() == units[j]->getY())
                     ) {
                 return true;
@@ -225,12 +223,12 @@ bool Gameboard::isBarrierRight()
 {
     std::vector<Unit*> figureUnits = current->getUnits();
     for (int i = 0; i < figureUnits.size(); i++) {
-        if (figureUnits[i]->getX() + 10 > 190) {
+        if (figureUnits[i]->getX() + Unit::WIDTH > 190) {
             return true;
         }
         for(int j = 0; j < units.size(); j++) {
 
-            if ((figureUnits[i]->getX() + 10 == units[j]->getX() &&
+            if ((figureUnits[i]->getX() + Unit::WIDTH == units[j]->getX() &&
                 figureUnits[i]->getY() == units[j]->getY())
                     ) {
                 return true;
@@ -247,7 +245,7 @@ void Gameboard::timerEvent(QTimerEvent*)
         if(isbottom) {
             setCurrentFigure();
         } else {
-            current->shiftCoords(0,10);
+            current->shiftCoords(0,Unit::HEIGHT);
         }
     }
 }
@@ -259,30 +257,30 @@ Figure *Gameboard:: createRandomFigure()
     srand(time(NULL));
     int randNum = 1 + rand() % 4;
     Figure *figure;
-    QPixmap pic1;
+    QPixmap nextFigurePicture;
     switch (randNum) {
         case 1:
-            pic1 = QPixmap(":/figures/images/images/square.png");
+            nextFigurePicture = QPixmap(":/figures/images/images/square.png");
             figure = new Square(posX,posY);
         break;
 
         case 2:
-            pic1 = QPixmap(":/figures/images/images/horse.png");
+            nextFigurePicture = QPixmap(":/figures/images/images/horse.png");
             figure = new Horse(posX,posY);
         break;
 
         case 3:
-            pic1 = QPixmap(":/figures/images/images/straight.png");
+            nextFigurePicture = QPixmap(":/figures/images/images/straight.png");
             figure = new Straight(posX,posY);
         break;
 
         case 4:
-            pic1 = QPixmap(":/figures/images/images/lightning.png");
+            nextFigurePicture = QPixmap(":/figures/images/images/lightning.png");
             figure = new Lightning(posX,posY);
         break;
     }
 
-    ui->next_figure->setPixmap(pic1);
+    ui->next_figure->setPixmap(nextFigurePicture);
     return figure;
 }
 
@@ -292,5 +290,4 @@ void Gameboard::resetGameState()
     units.clear();
     Score = 0;
     ui->lable_score->setText("Score");
-
 }

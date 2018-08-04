@@ -17,7 +17,9 @@ class Gameboard : public QGraphicsView
 public:
     explicit Gameboard(Ui::Tetris *ui, QWidget *parent = 0);
     Figure *current = NULL;
-
+    const int MAX_UNITS_PER_LINE = 20;
+    const int static BOARD_WIDTH = 200;
+    const int static BOARD_HEIGHT = 300;
     void setCurrentFigure();
     bool isBarrierBottom();
     bool isBarrierLeft();

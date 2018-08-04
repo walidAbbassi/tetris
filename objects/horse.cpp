@@ -1,13 +1,13 @@
 #include "horse.h"
 #include "unit.h"
 #include "figure.h"
-
+#include "gameboard.h"
 Horse::Horse(int x, int y, int ey, int erx) : Figure(x, y, ey, erx)
 {
     units.push_back(new Unit(0, 0, Qt::red));
-    units.push_back(new Unit(10,0, Qt::red));
-    units.push_back(new Unit(0, 10, Qt::red));
-    units.push_back(new Unit(0, 20, Qt::red));
+    units.push_back(new Unit(Unit::WIDTH,0, Qt::red));
+    units.push_back(new Unit(0, Unit::HEIGHT, Qt::red));
+    units.push_back(new Unit(0, 2 * Unit::HEIGHT, Qt::red));
 }
 
 void Horse::rotate()
@@ -20,40 +20,40 @@ void Horse::rotate()
 
     switch(rotatePosition) {
         case 0:
-            if(x + 20 >= 190 || y + 30 > 270) {
+            if(x + 2 * Unit::WIDTH >= Gameboard::WIDTH - Unit::WIDTH  || y + 3 * Unit::HEIGHT > Gameboard::HEIGHT - 3 * Unit::HEIGHT) {
                 break;
             }
             units[0]->setOffsetXY(0, 0);
-            units[1]->setOffsetXY(10, 0);
-            units[2]->setOffsetXY(0, 10);
-            units[3]->setOffsetXY(0, 20);
+            units[1]->setOffsetXY(Unit::WIDTH, 0);
+            units[2]->setOffsetXY(0, Unit::HEIGHT);
+            units[3]->setOffsetXY(0, 2 * Unit::WIDTH);
         break;
         case 1:
-            if(x - 30 < 0) {
+            if(x - 3 * Unit::WIDTH < 0) {
                 break;
             }
             units[0]->setOffsetXY(0, 0);
-            units[1]->setOffsetXY(0, 10);
-            units[2]->setOffsetXY(-10, 0);
-            units[3]->setOffsetXY(-20, 0);
+            units[1]->setOffsetXY(0, Unit::HEIGHT);
+            units[2]->setOffsetXY(-Unit::WIDTH, 0);
+            units[3]->setOffsetXY(- 2 * Unit::WIDTH, 0);
             break;
         case 2:
-            if(x - 10 < 0) {
+            if(x - Unit::WIDTH < 0) {
                 break;
             }
             units[0]->setOffsetXY(0, 0);
-            units[1]->setOffsetXY(0, -10);
-            units[2]->setOffsetXY(0, -20);
-            units[3]->setOffsetXY(-10, 0);
+            units[1]->setOffsetXY(0, -Unit::HEIGHT);
+            units[2]->setOffsetXY(0, - 2 * Unit::HEIGHT);
+            units[3]->setOffsetXY(-Unit::WIDTH, 0);
         break;
         case 3:
-            if(x + 30 >= 190) {
+            if(x + 3 * Unit::WIDTH >= Gameboard::WIDTH - Unit::WIDTH) {
                 break;
             }
             units[0]->setOffsetXY(0, 0);
-            units[1]->setOffsetXY(0, -10);
-            units[2]->setOffsetXY(10, 0);
-            units[3]->setOffsetXY(20, 0);
+            units[1]->setOffsetXY(0, -Unit::HEIGHT);
+            units[2]->setOffsetXY(Unit::WIDTH, 0);
+            units[3]->setOffsetXY(2 * Unit::WIDTH, 0);
         break;
     }
 }

@@ -35,7 +35,6 @@ void Figure::drawUnits(QGraphicsScene *scene)
 {
     for (int i = 0; i < units.size(); i++) {
         QGraphicsRectItem* item = units[i]->draw(scene, x, y);
-        //item->setBrush(units[i].getBrush());
         this->addToGroup(item);
     }
 
@@ -46,15 +45,11 @@ void Figure::rotate(){}
 void Figure::setX(int x)
 {
     this->x = x;
-
-    qDebug() << "changex X" + this->getCoords();
 }
 
 void Figure:: setY(int y)
 {
     this->y = y;
-
-    qDebug() << "changex X" + this->getCoords();
 }
 
 int Figure::getX()

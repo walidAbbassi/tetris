@@ -8,11 +8,11 @@ Unit::~Unit(){}
 QGraphicsRectItem *Unit::draw(QGraphicsScene *scene, int x, int y)
 {
     if(this->x != NULL || this->y != NULL) {
-        QGraphicsRectItem *item = scene->addRect(this->x,this->y,10,10);
+        QGraphicsRectItem *item = scene->addRect(this->x,this->y,Unit::WIDTH,Unit::HEIGHT);
         item->setBrush(brush);
         return item;
     } else {
-        QGraphicsRectItem *item = scene->addRect(x+offsetX,y+offsetY,10,10);
+        QGraphicsRectItem *item = scene->addRect(x+offsetX,y+offsetY,Unit::WIDTH,Unit::HEIGHT);
         item->setBrush(brush);
         return item;
     }
