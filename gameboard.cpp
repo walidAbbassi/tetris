@@ -27,11 +27,8 @@ void Gameboard::setSceneAndGroups()
     scene = new QGraphicsScene();
     this->setScene(scene);
 
-    group_1 = new QGraphicsItemGroup();
-    group_2 = new QGraphicsItemGroup();
-
-    scene->addItem(group_1);
-    scene->addItem(group_2);
+    unitsGroup = new QGraphicsItemGroup();
+    scene->addItem(unitsGroup);
 }
 
 void Gameboard::initTimer()
@@ -54,17 +51,12 @@ Gameboard::Gameboard(Ui::Tetris *ui, QWidget *parent)
     initTimer();
 }
 
-Gameboard::~Gameboard()
-{
-
-}
-
 void Gameboard::slotAlarmTimer()
 {
     if (!isGameOver) {
         drawCompleted = false;
         this->deleteItemsFromGroup(current);
-        this->deleteItemsFromGroup(group_2);
+        this->deleteItemsFromGroup(unitsGroup);
 
         int width = this->width();
         int height = this->height();
@@ -123,7 +115,7 @@ void Gameboard::setCurrentFigure()
 void Gameboard::countOneLineUnits(std::map< QString, int> &coords)
 {
     for (int i = 0; i < units.size(); i++) {
-        QString position = QString::number(units[i]->getY());/**/
+        QString position = QString::number(units[i]->getY());
         if (coords.find(position) != coords.end()) {
             coords[position]++;
         } else {
@@ -186,7 +178,7 @@ void Gameboard::moveAllUnitsDown(std::vector<int> deletedCoords)
 void Gameboard::drawUnits()
 {
     for (int i = 0; i < units.size(); i++) {
-        group_2->addToGroup(units[i]->draw(this->scene));
+        unitsGroup->addToGroup(units[i]->draw(this->scene));
     }
 
 }
@@ -266,32 +258,32 @@ Figure *Gameboard:: createRandomFigure()
     int posY = 0;
     srand(time(NULL));
     int randNum = 1 + rand() % 4;
-    Figure *f;
+    Figure *figure;
     QPixmap pic1;
     switch (randNum) {
         case 1:
             pic1 = QPixmap(":/figures/images/images/square.png");
-            f = new Square(posX,posY);
+            figure = new Square(posX,posY);
         break;
 
         case 2:
             pic1 = QPixmap(":/figures/images/images/horse.png");
-            f = new Horse(posX,posY);
+            figure = new Horse(posX,posY);
         break;
 
         case 3:
             pic1 = QPixmap(":/figures/images/images/straight.png");
-            f = new Straight(posX,posY);
+            figure = new Straight(posX,posY);
         break;
 
         case 4:
             pic1 = QPixmap(":/figures/images/images/lightning.png");
-            f = new Lightning(posX,posY);
+            figure = new Lightning(posX,posY);
         break;
     }
 
     ui->next_figure->setPixmap(pic1);
-    return f;
+    return figure;
 }
 
 void Gameboard::resetGameState()

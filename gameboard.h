@@ -10,13 +10,13 @@
 #include "ui_tetris.h"
 #include "objects/unit.h"
 #include <vector>
-// Расширяем класс QGraphicsView
+
 class Gameboard : public QGraphicsView
 {
     Q_OBJECT
 public:
     explicit Gameboard(Ui::Tetris *ui, QWidget *parent = 0);
-    Figure               *current = NULL;
+    Figure *current = NULL;
 
     void setCurrentFigure();
     bool isBarrierBottom();
@@ -25,8 +25,6 @@ public:
     void resetGameState();
 
     bool drawCompleted = false;
-    ~Gameboard();
-
 protected:
     virtual void timerEvent(QTimerEvent*);
 
@@ -37,8 +35,7 @@ private slots:
 
 private:
     QGraphicsScene      *scene;
-    QGraphicsItemGroup  *group_1;
-    QGraphicsItemGroup  *group_2;
+    QGraphicsItemGroup  *unitsGroup;
     QTimer              *timer;
     int repaintCount = 0;
     int Score = 0;
