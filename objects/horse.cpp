@@ -20,10 +20,7 @@ void Horse::rotate()
 
     switch(rotatePosition) {
         case 0:
-            if(x + 20 >= 190) {
-                break;
-            }
-            if(y + 30 > 270) {
+            if(x + 20 >= 190 || y + 30 > 270) {
                 break;
             }
             units[0]->setOffsetXY(0, 0);

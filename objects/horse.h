@@ -7,7 +7,7 @@ class Horse: public Figure
 {
 public:
     Horse(int x, int y, int ey = 10 , int erx = 20);
-    void rotate();
+    void rotate() override;
 };
 
 #endif // HORSE_H
