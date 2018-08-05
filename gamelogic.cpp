@@ -1,4 +1,4 @@
-#include "gameboard.h"
+#include "gamelogic.h"
 #include "objects/horse.h"
 #include "objects/square.h"
 #include "objects/straight.h"
@@ -10,35 +10,7 @@
 #include <map>
 #include <vector>
 
-void Gameboard::setDefaultSettings()
-{
-    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-    this->setMaximumWidth(Gameboard::BOARD_WIDTH);
-    this->setMaximumHeight(Gameboard::BOARD_HEIGHT);
-}
-
-void Gameboard::setSceneAndGroups()
-{
-    scene = new QGraphicsScene();
-    this->setScene(scene);
-
-    unitsGroup = new QGraphicsItemGroup();
-    scene->addItem(unitsGroup);
-}
-
-void Gameboard::initTimer()
-{
-    timer = new QTimer();
-
-    connect(timer, SIGNAL(timeout()), this, SLOT(slotAlarmTimer()));
-    timer->start(50);
-    startTimer(750);
-}
-
-Gameboard::Gameboard(Ui::Tetris *ui, QWidget *parent)
+GameLogic::GameLogic(Ui::Tetris *ui, QWidget *parent)
     : QGraphicsView(parent)
 {
     this->ui = ui;
@@ -49,26 +21,56 @@ Gameboard::Gameboard(Ui::Tetris *ui, QWidget *parent)
     initTimer();
 }
 
-void Gameboard::slotAlarmTimer()
+void GameLogic::setDefaultSettings()
+{
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    setMaximumWidth(GameLogic::BOARD_WIDTH);
+    setMaximumHeight(GameLogic::BOARD_HEIGHT);
+}
+
+void GameLogic::setSceneAndGroups()
+{
+    scene = new QGraphicsScene();
+    setScene(scene);
+
+    unitsGroup = new QGraphicsItemGroup();
+    scene->addItem(unitsGroup);
+}
+
+void GameLogic::initTimer()
+{
+    timer = new QTimer();
+
+    connect(timer, SIGNAL(timeout()), this, SLOT(startGameLoop()));
+    timer->start(50);
+    startTimer(750);
+}
+
+void GameLogic::startGameLoop()
 {
     if (!isGameOver) {
         drawCompleted = false;
-        this->deleteItemsFromGroup(current);
-        this->deleteItemsFromGroup(unitsGroup);
+
+        deleteItemsFromGroup(current);
+        deleteItemsFromGroup(unitsGroup);
 
         int width = this->width();
         int height = this->height();
         scene->setSceneRect(0,0,width,height);
 
         current->drawUnits(scene);
-        this->drawUnits();
+        drawUnits();
+
+        deleteOnelineUnits();
         drawCompleted = true;
-        this->deleteOnelineUnits();
     }
 }
 
 
-void Gameboard::resizeEvent(QResizeEvent *event)
+void GameLogic::resizeEvent(QResizeEvent *event)
 {
     timer->start(50);
     QGraphicsView::resizeEvent(event);
@@ -76,7 +78,7 @@ void Gameboard::resizeEvent(QResizeEvent *event)
 
 
 
-void Gameboard::deleteItemsFromGroup(QGraphicsItemGroup *group)
+void GameLogic::deleteItemsFromGroup(QGraphicsItemGroup *group)
 {
 
     foreach( QGraphicsItem *item, scene->items(group->boundingRect())) {
@@ -86,7 +88,7 @@ void Gameboard::deleteItemsFromGroup(QGraphicsItemGroup *group)
     }
 }
 
-void Gameboard::setCurrentFigure()
+void GameLogic::setCurrentFigure()
 {
     if(current != NULL) {
         std::vector<Unit*> figureUnits = current->getUnits();
@@ -110,7 +112,7 @@ void Gameboard::setCurrentFigure()
 
 }
 
-void Gameboard::countOneLineUnits(std::map< QString, int> &coords)
+void GameLogic::countOneLineUnits(std::map< QString, int> &coords)
 {
     for (int i = 0; i < units.size(); i++) {
         QString position = QString::number(units[i]->getY());
@@ -122,34 +124,35 @@ void Gameboard::countOneLineUnits(std::map< QString, int> &coords)
     }
 }
 
-std::vector<int> Gameboard::deleteUnits(std::map< QString, int> &coords, std::map< QString, int>::iterator &it)
+std::vector<int> GameLogic::deleteUnits(std::map< QString, int> &linesOfUnits, std::map< QString, int>::iterator &line)
 {
     std::vector<int> deletedCoords;
-    for ( it = coords.begin(); it != coords.end(); it++) {
-        int currentPos = (it->first).toInt();
-        if (it->second == Gameboard::MAX_UNITS_PER_LINE) {
-            std::vector< Unit*>::iterator c = units.begin();
-            while (c != units.end()) {
+    for ( line = linesOfUnits.begin(); line != linesOfUnits.end(); line++) {
+        int currentPos = (line->first).toInt();
+        int unitsInLine = line->second;
+        if (unitsInLine == GameLogic::MAX_UNITS_PER_LINE) {
+            std::vector< Unit*>::iterator unitsIterator = units.begin();
+            while (unitsIterator != units.end()) {
 
-                if((*c)->getY() == currentPos) {
+                if((*unitsIterator)->getY() == currentPos) {
                     if (std::find(deletedCoords.begin(), deletedCoords.end(), currentPos) == deletedCoords.end()) {
                         deletedCoords.push_back(currentPos);
                     }
 
-                    c = units.erase(c);
+                    unitsIterator = units.erase(unitsIterator);
                 } else {
-                    c++;
+                    unitsIterator++;
                 }
             }
-            Score += Gameboard::MAX_UNITS_PER_LINE;
-            ui->score_count->setText(QString::number(Score));
+            score += GameLogic::MAX_UNITS_PER_LINE;
+            ui->score_count->setText(QString::number(score));
         }
     }
 
     return deletedCoords;
 }
 
-void Gameboard::deleteOnelineUnits()
+void GameLogic::deleteOnelineUnits()
 {
     std::map< QString, int> coords;
 
@@ -162,7 +165,7 @@ void Gameboard::deleteOnelineUnits()
     moveAllUnitsDown(deletedCoords);
 }
 
-void Gameboard::moveAllUnitsDown(std::vector<int> deletedCoords)
+void GameLogic::moveAllUnitsDown(std::vector<int> deletedCoords)
 {
     for(int i = 0; i < units.size(); i++) {
         for (int j = 0; j < deletedCoords.size(); j ++) {
@@ -173,7 +176,7 @@ void Gameboard::moveAllUnitsDown(std::vector<int> deletedCoords)
     }
 }
 
-void Gameboard::drawUnits()
+void GameLogic::drawUnits()
 {
     for (int i = 0; i < units.size(); i++) {
         unitsGroup->addToGroup(units[i]->draw(this->scene));
@@ -181,7 +184,7 @@ void Gameboard::drawUnits()
 
 }
 
-bool Gameboard::isBarrierBottom()
+bool GameLogic::isBarrierBottom()
 {
     std::vector<Unit*> figureUnits = current->getUnits();
     for (int i = 0; i < figureUnits.size(); i++) {
@@ -200,7 +203,7 @@ bool Gameboard::isBarrierBottom()
     return false;
 }
 
-bool Gameboard::isBarrierLeft()
+bool GameLogic::isBarrierLeft()
 {
     std::vector<Unit*> figureUnits = current->getUnits();
     for (int i = 0; i < figureUnits.size(); i++) {
@@ -219,7 +222,7 @@ bool Gameboard::isBarrierLeft()
     return false;
 }
 
-bool Gameboard::isBarrierRight()
+bool GameLogic::isBarrierRight()
 {
     std::vector<Unit*> figureUnits = current->getUnits();
     for (int i = 0; i < figureUnits.size(); i++) {
@@ -238,7 +241,7 @@ bool Gameboard::isBarrierRight()
     return false;
 }
 
-void Gameboard::timerEvent(QTimerEvent*)
+void GameLogic::timerEvent(QTimerEvent*)
 {
     if (drawCompleted) {
         bool isbottom = isBarrierBottom();
@@ -250,7 +253,7 @@ void Gameboard::timerEvent(QTimerEvent*)
     }
 }
 
-Figure *Gameboard:: createRandomFigure()
+Figure *GameLogic:: createRandomFigure()
 {
     int posX = 50;
     int posY = 0;
@@ -284,10 +287,39 @@ Figure *Gameboard:: createRandomFigure()
     return figure;
 }
 
-void Gameboard::resetGameState()
+void GameLogic::resetGameState()
 {
     setCurrentFigure();
     units.clear();
-    Score = 0;
+    score = 0;
     ui->lable_score->setText("Score");
 }
+
+bool GameLogic::moveCurrentFigure(QString key)
+{
+    if(key == "W") {
+        current->shiftCoords(0,-Unit::HEIGHT);
+    } else if(key == "S") {
+        if (!isBarrierBottom()) {
+            current->shiftCoords(0, Unit::HEIGHT);
+            return false;
+        }
+        setCurrentFigure();
+    } else if(key == "A") {
+        if (!isBarrierLeft()) {
+            current->shiftCoords(-Unit::WIDTH, 0);
+        }
+    } else if(key == "D") {
+        if (!isBarrierRight()) {
+            current->shiftCoords(Unit::WIDTH, 0);
+        }
+    } else if(key == "R") {
+        drawCompleted = false;
+        current->rotate();
+    }
+    return false;
+}
+
+
+
+

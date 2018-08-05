@@ -1,7 +1,7 @@
 #include "lightning.h"
 #include "unit.h"
 #include "figure.h"
-#include "gameboard.h"
+#include "gamelogic.h"
 
 Lightning::Lightning(int x, int y, int ey, int erx) : Figure(x, y, ey, erx)
 {
@@ -21,7 +21,7 @@ void Lightning::rotate()
 
     switch(rotatePosition) {
         case 0:
-            if(y + 2 * Unit::HEIGHT >= Gameboard::BOARD_HEIGHT - 2 * Unit::HEIGHT || x + 2 * Unit::WIDTH >=270) {
+            if(y + 2 * Unit::HEIGHT >= GameLogic::BOARD_HEIGHT - 2 * Unit::HEIGHT || x + 2 * Unit::WIDTH >=270) {
                 break;
             }
             units[0]->setOffsetXY(0, 0);

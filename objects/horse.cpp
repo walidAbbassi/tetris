@@ -1,7 +1,7 @@
 #include "horse.h"
 #include "unit.h"
 #include "figure.h"
-#include "gameboard.h"
+#include "gamelogic.h"
 Horse::Horse(int x, int y, int ey, int erx) : Figure(x, y, ey, erx)
 {
     units.push_back(new Unit(0, 0, Qt::red));
@@ -20,7 +20,7 @@ void Horse::rotate()
 
     switch(rotatePosition) {
         case 0:
-            if(x + 2 * Unit::WIDTH >= Gameboard::BOARD_WIDTH - Unit::WIDTH  || y + 3 * Unit::HEIGHT > Gameboard::BOARD_HEIGHT - 3 * Unit::HEIGHT) {
+            if(x + 2 * Unit::WIDTH >= GameLogic::BOARD_WIDTH - Unit::WIDTH  || y + 3 * Unit::HEIGHT > GameLogic::BOARD_HEIGHT - 3 * Unit::HEIGHT) {
                 break;
             }
             units[0]->setOffsetXY(0, 0);
@@ -47,7 +47,7 @@ void Horse::rotate()
             units[3]->setOffsetXY(-Unit::WIDTH, 0);
         break;
         case 3:
-            if(x + 3 * Unit::WIDTH >= Gameboard::BOARD_WIDTH - Unit::WIDTH) {
+            if(x + 3 * Unit::WIDTH >= GameLogic::BOARD_WIDTH - Unit::WIDTH) {
                 break;
             }
             units[0]->setOffsetXY(0, 0);
