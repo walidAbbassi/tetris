@@ -38,3 +38,6 @@ FORMS    += tetris.ui
 RESOURCES += \
     images.qrc
 CONFIG += c++11
+
+DISTFILES += \
+    README.md
