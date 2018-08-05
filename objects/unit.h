@@ -4,6 +4,8 @@
 class Unit
 {
 public:
+    const static int WIDTH = 10;
+    const static int HEIGHT = 10;
     Unit(int offsetX, int offsetY, QBrush brush);
     ~Unit();
     void setXY(int x, int y);
@@ -23,10 +25,8 @@ public:
 private:
     int offsetX;
     int offsetY;
-    int x = NULL;
-    int y = NULL;
-    int width = 10;
-    int height = 10;
+    int x = 0;
+    int y = 0;
     QBrush brush;
     QPen pen = QPen(Qt::black);
 

@@ -10,41 +10,41 @@
 #include "ui_tetris.h"
 #include "objects/unit.h"
 #include <vector>
-// Расширяем класс QGraphicsView
-class Gameboard : public QGraphicsView
+
+class GameLogic : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit Gameboard(Ui::Tetris *ui, QWidget *parent = 0);
-    Figure               *current = NULL;
+    Figure *current = NULL;
+    const int MAX_UNITS_PER_LINE = 20;
+    const int static BOARD_WIDTH = 200;
+    const int static BOARD_HEIGHT = 300;
+    bool drawCompleted = false;
 
+    explicit GameLogic(Ui::Tetris *ui, QWidget *parent = 0);
     void setCurrentFigure();
     bool isBarrierBottom();
     bool isBarrierLeft();
     bool isBarrierRight();
     void resetGameState();
-
-    bool drawCompleted = false;
-    ~Gameboard();
-
+    bool moveCurrentFigure(QString key);
 protected:
     virtual void timerEvent(QTimerEvent*);
 
 signals:
 
 private slots:
-    void slotAlarmTimer();
+    void startGameLoop();
 
 private:
-    QGraphicsScene      *scene;
-    QGraphicsItemGroup  *group_1;
-    QGraphicsItemGroup  *group_2;
-    QTimer              *timer;
-    int repaintCount = 0;
-    int Score = 0;
-    Ui::Tetris *ui;
+    QGraphicsScene *scene;
+    QGraphicsItemGroup *unitsGroup;
+    QTimer *timer;
+    Ui::Tetris  *ui;
     Figure *next = NULL;
     std::vector<Unit*> units;
+    int repaintCount = 0;
+    int score = 0;
     bool isGameOver;
 private:
     void resizeEvent(QResizeEvent *event);
@@ -54,10 +54,10 @@ private:
     void initTimer();
     void deleteOnelineUnits();
     void drawUnits();
-    Figure *createRandomFigure();
     void countOneLineUnits(std::map< QString, int> &coords);
-    std::vector<int> deleteUnits(std::map< QString, int> &coords, std::map< QString, int>::iterator &it);
     void moveAllUnitsDown(std::vector<int> deletedCoords);
+    Figure *createRandomFigure();
+    std::vector<int> deleteUnits(std::map< QString, int> &coords, std::map< QString, int>::iterator &it);
 };
 
 #endif // GAMEBOARD_H
