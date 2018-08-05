@@ -7,7 +7,7 @@ Unit::Unit(int offsetX, int offsetY, QBrush brush): offsetX(offsetX), offsetY(of
 Unit::~Unit(){}
 QGraphicsRectItem *Unit::draw(QGraphicsScene *scene, int x, int y)
 {
-    if(this->x != NULL || this->y != NULL) {
+    if(this->x != 0 || this->y != 0) {
         QGraphicsRectItem *item = scene->addRect(this->x,this->y,Unit::WIDTH,Unit::HEIGHT);
         item->setBrush(brush);
         return item;

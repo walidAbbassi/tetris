@@ -25,8 +25,8 @@ public:
 private:
     int offsetX;
     int offsetY;
-    int x = NULL;
-    int y = NULL;
+    int x = 0;
+    int y = 0;
     QBrush brush;
     QPen pen = QPen(Qt::black);
 

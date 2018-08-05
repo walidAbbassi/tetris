@@ -22,9 +22,10 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
 private:
+    Game *game;
     Ui::Tetris *ui;
     GameLogic   *gameLogic;
-    Game *game;
+
 private slots:
 
     void on_pushButton_start_clicked();

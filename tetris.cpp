@@ -6,8 +6,8 @@
 #include "game.h"
 
 Tetris::Tetris(Game *game, QWidget *parent) :
-    game(game),
     QMainWindow(parent),
+    game(game),
     ui(new Ui::Tetris)
 {
     ui->setupUi(this);

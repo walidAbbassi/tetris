@@ -114,7 +114,7 @@ void GameLogic::setCurrentFigure()
 
 void GameLogic::countOneLineUnits(std::map< QString, int> &coords)
 {
-    for (int i = 0; i < units.size(); i++) {
+    for (unsigned int i = 0; i < units.size(); i++) {
         QString position = QString::number(units[i]->getY());
         if (coords.find(position) != coords.end()) {
             coords[position]++;
@@ -167,8 +167,8 @@ void GameLogic::deleteOnelineUnits()
 
 void GameLogic::moveAllUnitsDown(std::vector<int> deletedCoords)
 {
-    for(int i = 0; i < units.size(); i++) {
-        for (int j = 0; j < deletedCoords.size(); j ++) {
+    for(unsigned int i = 0; i < units.size(); i++) {
+        for (unsigned int j = 0; j < deletedCoords.size(); j ++) {
             if(units[i]->getY() < deletedCoords[j]) {
                 units[i]->setY(units[i]->getY() + Unit::HEIGHT);
             }
@@ -178,7 +178,7 @@ void GameLogic::moveAllUnitsDown(std::vector<int> deletedCoords)
 
 void GameLogic::drawUnits()
 {
-    for (int i = 0; i < units.size(); i++) {
+    for (unsigned int i = 0; i < units.size(); i++) {
         unitsGroup->addToGroup(units[i]->draw(this->scene));
     }
 
@@ -187,11 +187,11 @@ void GameLogic::drawUnits()
 bool GameLogic::isBarrierBottom()
 {
     std::vector<Unit*> figureUnits = current->getUnits();
-    for (int i = 0; i < figureUnits.size(); i++) {
+    for (unsigned int i = 0; i < figureUnits.size(); i++) {
         if (figureUnits[i]->getY() + Unit::HEIGHT > 270) {
             return true;
         }
-        for(int j = 0; j < units.size(); j++) {
+        for(unsigned int j = 0; j < units.size(); j++) {
 
             if ((figureUnits[i]->getY() + Unit::HEIGHT == units[j]->getY() &&
                 figureUnits[i]->getX() == units[j]->getX())
@@ -206,11 +206,11 @@ bool GameLogic::isBarrierBottom()
 bool GameLogic::isBarrierLeft()
 {
     std::vector<Unit*> figureUnits = current->getUnits();
-    for (int i = 0; i < figureUnits.size(); i++) {
+    for (unsigned int i = 0; i < figureUnits.size(); i++) {
         if (figureUnits[i]->getX() - Unit::WIDTH < 0) {
             return true;
         }
-        for(int j = 0; j < units.size(); j++) {
+        for(unsigned int j = 0; j < units.size(); j++) {
 
             if ((figureUnits[i]->getX() - Unit::WIDTH == units[j]->getX() &&
                 figureUnits[i]->getY() == units[j]->getY())
@@ -225,11 +225,11 @@ bool GameLogic::isBarrierLeft()
 bool GameLogic::isBarrierRight()
 {
     std::vector<Unit*> figureUnits = current->getUnits();
-    for (int i = 0; i < figureUnits.size(); i++) {
+    for (unsigned int i = 0; i < figureUnits.size(); i++) {
         if (figureUnits[i]->getX() + Unit::WIDTH > 190) {
             return true;
         }
-        for(int j = 0; j < units.size(); j++) {
+        for(unsigned int j = 0; j < units.size(); j++) {
 
             if ((figureUnits[i]->getX() + Unit::WIDTH == units[j]->getX() &&
                 figureUnits[i]->getY() == units[j]->getY())
