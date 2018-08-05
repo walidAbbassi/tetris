@@ -21,7 +21,7 @@ void Lightning::rotate()
 
     switch(rotatePosition) {
         case 0:
-            if(y + 2 * Unit::HEIGHT >= Gameboard::HEIGHT - 2 * Unit::HEIGHT || x + 2 * Unit::WIDTH >=270) {
+            if(y + 2 * Unit::HEIGHT >= Gameboard::BOARD_HEIGHT - 2 * Unit::HEIGHT || x + 2 * Unit::WIDTH >=270) {
                 break;
             }
             units[0]->setOffsetXY(0, 0);

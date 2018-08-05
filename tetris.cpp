@@ -3,8 +3,9 @@
 #include <QString>
 #include <objects/figure.h>
 #include <objects/square.h>
-
-Tetris::Tetris(QWidget *parent) :
+#include "game.h"
+Tetris::Tetris(Game *game, QWidget *parent) :
+    game(game),
     QMainWindow(parent),
     ui(new Ui::Tetris)
 {

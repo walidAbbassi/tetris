@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     objects/figure.cpp \
     objects/square.cpp \
     objects/straight.cpp \
-    objects/lightning.cpp
+    objects/lightning.cpp \
+    game.cpp
 
 HEADERS  += tetris.h \
     objects/unit.h \
@@ -29,7 +30,8 @@ HEADERS  += tetris.h \
     objects/figure.h \
     objects/square.h \
     objects/straight.h \
-    objects/lightning.h
+    objects/lightning.h \
+    game.h
 
 FORMS    += tetris.ui
 

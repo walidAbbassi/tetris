@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <gameboard.h>
 #include <QKeyEvent>
-
+#include "game.h"
 namespace Ui {
 class Tetris;
 }
@@ -15,7 +15,7 @@ class Tetris : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit Tetris(QWidget *parent = 0);
+    explicit Tetris(Game *game, QWidget *parent = 0);
     ~Tetris();
 
     bool makeWay(QString key, Figure *current);
@@ -26,6 +26,7 @@ protected:
 private:
     Ui::Tetris *ui;
     Gameboard   *gameboard;
+    Game *game;
 private slots:
 
     void on_pushButton_start_clicked();
