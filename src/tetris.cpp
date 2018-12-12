@@ -29,5 +29,6 @@ void Tetris::keyPressEvent(QKeyEvent *event)
 
 void Tetris::on_pushButton_start_clicked()
 {
+    gameLogic->isGameStarted = true;
     gameLogic->resetGameState();
 }

@@ -20,6 +20,7 @@ public:
     const int static BOARD_WIDTH = 200;
     const int static BOARD_HEIGHT = 300;
     bool drawCompleted = false;
+    bool isGameStarted = false;
 
     explicit GameLogic(Ui::Tetris *ui, QWidget *parent = 0);
     void setCurrentFigure();
@@ -45,7 +46,7 @@ private:
     std::vector<Unit*> units;
     int repaintCount = 0;
     int score = 0;
-    bool isGameOver;
+    bool isGameOver = false;
 private:
     void resizeEvent(QResizeEvent *event);
     void deleteItemsFromGroup(QGraphicsItemGroup *group_1);

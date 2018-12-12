@@ -51,7 +51,7 @@ void GameLogic::initTimer()
 
 void GameLogic::startGameLoop()
 {
-    if (!isGameOver) {
+    if (isGameStarted && !isGameOver) {
         drawCompleted = false;
 
         deleteItemsFromGroup(current);
@@ -291,6 +291,10 @@ void GameLogic::resetGameState()
 {
     setCurrentFigure();
     units.clear();
+    
+    deleteItemsFromGroup(current);
+    deleteItemsFromGroup(unitsGroup);
+    
     score = 0;
     ui->score_count->setText(QString::number(score));
     ui->lable_score->setText("Score");
