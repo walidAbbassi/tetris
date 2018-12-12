@@ -1,1 +1,8 @@
 tetris.pro.user
+*.o
+moc_*
+tetris
+ui_tetris.h
+nbproject/
+qrc_*
+.qmake.stash

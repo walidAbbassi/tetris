@@ -291,7 +291,8 @@ void GameLogic::resetGameState()
 {
     setCurrentFigure();
     units.clear();
-    score = 0;
+    score = 10;
+    ui->score_count->setText(QString::number(score));
     ui->lable_score->setText("Score");
 }
 
