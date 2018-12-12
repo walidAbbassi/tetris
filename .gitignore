@@ -6,3 +6,4 @@ ui_tetris.h
 nbproject/
 qrc_*
 .qmake.stash
+/build/

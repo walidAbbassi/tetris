@@ -13,31 +13,35 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        tetris.cpp \
-    objects/unit.cpp \
-    objects/horse.cpp \
-    objects/figure.cpp \
-    objects/square.cpp \
-    objects/straight.cpp \
-    objects/lightning.cpp \
-    game.cpp \
-    gamelogic.cpp
+        src/tetris.cpp \
+    src/objects/unit.cpp \
+    src/objects/horse.cpp \
+    src/objects/figure.cpp \
+    src/objects/square.cpp \
+    src/objects/straight.cpp \
+    src/objects/lightning.cpp \
+    src/game.cpp \
+    src/gamelogic.cpp
 
-HEADERS  += tetris.h \
-    objects/unit.h \
-    objects/horse.h \
-    objects/figure.h \
-    objects/square.h \
-    objects/straight.h \
-    objects/lightning.h \
-    game.h \
-    gamelogic.h
+HEADERS  += src/tetris.h \
+    src/objects/unit.h \
+    src/objects/horse.h \
+    src/objects/figure.h \
+    src/objects/square.h \
+    src/objects/straight.h \
+    src/objects/lightning.h \
+    src/game.h \
+    src/gamelogic.h
 
-FORMS    += tetris.ui
+FORMS    += src/resources/tetris.ui
 
 RESOURCES += \
-    images.qrc
+    src/resources/images.qrc
 CONFIG += c++11
 
 DISTFILES += \
     README.md
+
+DESTDIR=bin #Target file directory
+OBJECTS_DIR=build #Intermediate object files directory
+MOC_DIR=build #Intermediate moc files directory

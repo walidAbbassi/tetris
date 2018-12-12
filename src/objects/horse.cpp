@@ -1,7 +1,7 @@
 #include "horse.h"
 #include "unit.h"
 #include "figure.h"
-#include "gamelogic.h"
+#include "../gamelogic.h"
 Horse::Horse(int x, int y, int ey, int erx) : Figure(x, y, ey, erx)
 {
     units.push_back(new Unit(0, 0, Qt::red));

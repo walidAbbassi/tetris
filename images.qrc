@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/figures/images">
-        <file>images/straight.png</file>
-        <file>images/square.png</file>
-        <file>images/lightning.png</file>
-        <file>images/horse.png</file>
-    </qresource>
-</RCC>

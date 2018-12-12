@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QPainter>
-#include <gamelogic.h>
+#include "gamelogic.h"
 #include <QKeyEvent>
 #include "game.h"
 namespace Ui {

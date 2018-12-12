@@ -1,7 +1,7 @@
 #include "lightning.h"
 #include "unit.h"
 #include "figure.h"
-#include "gamelogic.h"
+#include "../gamelogic.h"
 
 Lightning::Lightning(int x, int y, int ey, int erx) : Figure(x, y, ey, erx)
 {
